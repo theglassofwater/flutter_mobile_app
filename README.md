@@ -1,9 +1,9 @@
 # Flutter Android App
 
-This Flutter Android application follows a clean and scalable folder structure inspired by [A Simple Way to Organize Your Code in Flutter](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-code-in-flutter-e175e7004fb5) by Leonidas Kanellopoulos.
+This Flutter Android application follows a clean and scalable folder structure inspired by [A Simple Way to Organize Your Code in Flutter](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-code-in-flutter-e175e7004fb5).
 
 ## 📁 Project Structure
-
+<pre>
 lib/ 
 ├── commons.dart 
 ├── models/ 
@@ -16,7 +16,7 @@ lib/
 ├── styles/ 
 ├── utils/ 
 └── widgets/
-
+</pre>
 
 ### commons.dart
 - Centralized file for common imports and constants used throughout the app.
