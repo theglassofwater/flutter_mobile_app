@@ -5,7 +5,6 @@ This Flutter Android application follows a clean and scalable folder structure i
 ## 📁 Project Structure
 <pre>
 lib/ 
-├── commons.dart 
 ├── models/ 
 ├── screens/ 
 │ ├── home/ 
@@ -15,11 +14,10 @@ lib/
 ├── services/ 
 ├── styles/ 
 ├── utils/ 
-└── widgets/
+├── widgets/
+├── commons.dart 
+└── main.dart
 </pre>
-
-### commons.dart
-- Centralized file for common imports and constants used throughout the app.
 
 ### models/
 - Contains data model classes representing the structure of data used in the app.
@@ -41,6 +39,9 @@ lib/
 
 ### widgets/
 - Reusable UI components that can be shared between screens.
+
+### commons.dart
+- Centralized file for common imports and constants used throughout the app.
 
 ## 🚀 Getting Started
 
