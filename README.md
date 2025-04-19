@@ -4,7 +4,18 @@ This Flutter Android application follows a clean and scalable folder structure i
 
 ## 📁 Project Structure
 
-lib/ ├── commons.dart ├── models/ ├── screens/ │ ├── home/ │ │ ├── home_screen.dart │ │ └── home_controller.dart │ └── ... ├── services/ ├── styles/ ├── utils/ └── widgets/
+lib/ 
+├── commons.dart 
+├── models/ 
+├── screens/ 
+│ ├── home/ 
+│ │ ├── home_screen.dart 
+│ │ └── home_controller.dart 
+│ └── ... 
+├── services/ 
+├── styles/ 
+├── utils/ 
+└── widgets/
 
 
 ### commons.dart
