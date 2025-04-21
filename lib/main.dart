@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app/styles/themes.dart';
+import 'package:flutter_mobile_app/utils/theme_manager.dart';
 import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,13 +22,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-          brightness: Brightness.dark,
-        ),
-      ),
-      home: BottomNavBar(),
+
+      home: const BottomNavBar(),
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }

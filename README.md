@@ -1,6 +1,8 @@
 # Flutter Android App
 
-This Flutter Android application follows a clean and scalable folder structure inspired by [A Simple Way to Organize Your Code in Flutter](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-code-in-flutter-e175e7004fb5).
+This Flutter Android application follows a clean and scalable folder structure inspired by [A Simple Way to Organize Your Code in Flutter](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-code-in-flutter-e175e7004fb5). 
+
+Maybe use [How to structure styles and themes](https://medium.com/@kanellopoulos.leo/a-simple-way-to-organize-your-styles-themes-in-flutter-a0e7eba5b297) when i start using styles and themes.
 
 ## 📁 Project Structure
 <pre>
