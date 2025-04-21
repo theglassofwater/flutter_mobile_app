@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobile_app/styles/themes.dart';
-import 'package:provider/provider.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemeData _themeData = AppTheme.lightTheme;

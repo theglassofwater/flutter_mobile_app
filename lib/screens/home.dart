@@ -6,7 +6,7 @@ class Home extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MyHomePage(title: 'Home Page');
+    return MyHomePage(title: 'Home');
   }
 }
 
@@ -19,40 +19,96 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter(int num) {
-    setState(() {
-      _counter += num;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Center(child: Text(widget.title)),
+        elevation: 10,
+        shadowColor: const Color.fromARGB(255, 255, 255, 255),
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(1.0),
+        //   child: Divider(height: 1.0, thickness: 1.0, color: Colors.grey),
+        // ),
       ),
 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('Home'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: 11, // 1 manual + 10 generated
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return Container(
+                width: double.infinity,
+                height: 120,
+                color: Colors.white,
+                margin: EdgeInsets.symmetric(vertical: 2),
+                padding: EdgeInsets.all(10.0),
+                child: Text("Weekly Statistics"),
+              );
+            }
+
+            // index - 1 because first item is manual
+            return Container(
+              width: double.infinity,
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(vertical: 2),
+              // padding: EdgeInsets.all(30),
+              height: 80,
+              // decoration: BoxDecoration(
+              //   color: Colors.blueAccent,
+              //   borderRadius: BorderRadius.circular(12),
+              // ),
+            );
+          },
         ),
       ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _incrementCounter(3),
-        // tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+// ListView(
+//           children: [
+//             Container(width: double.infinity, height: 150, color: Colors.blue),
+//             Container(
+//               width: double.infinity,
+//               height: 100,
+//               color: Colors.amberAccent,
+//             ),
+//           ],
+//         ),
+
+      // body: SafeArea(
+      //   child: Container(
+      //     // color: Colors.red,
+      //     width: double.infinity,
+      //     height: double.infinity,
+      //     decoration: BoxDecoration(
+      //       borderRadius: BorderRadius.circular(5.0),
+      //       color: Colors.red,
+      //     ),
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.start,
+      //       children: <Widget>[
+      //         Container(
+      //           width: double.infinity,
+      //           height: 150,
+      //           color: Colors.blue,
+      //         ),
+      //         Container(
+      //           width: double.infinity,
+      //           height: 100,
+      //           color: Colors.amberAccent,
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () => _incrementCounter(3),
+//         // tooltip: 'Increment',
+//         child: const Icon(Icons.add),
+//       ), // This trailing comma makes auto-formatting nicer for build methods.
+//     );
+//   }
+// }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/home.dart';
-import 'package:flutter_mobile_app/screens/journeys.dart';
+import 'package:flutter_mobile_app/screens/profile.dart';
 import 'package:flutter_mobile_app/screens/settings.dart';
+// import 'package:flutter_mobile_app/screens/settings___.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key});
@@ -11,13 +12,12 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    Home(),
+    Home(), // home == journeys
     Settings(),
-    Settings(),
-    Journeys(),
+    Profile(),
   ];
 
   void _onTap(int index) {
@@ -31,28 +31,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
-        // elevation: 10,
+        // useLegacyColorScheme: true,
+        // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
+        elevation: 10,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "sdfbfsid",
-            // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
+            label: "Home/Journeys",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "fsdfs",
-            // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "fsdfs",
-            // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.abc),
-            label: "Journeys",
-            // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Start"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
         currentIndex: _selectedIndex,
         onTap: _onTap,

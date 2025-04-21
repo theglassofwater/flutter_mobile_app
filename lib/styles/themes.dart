@@ -6,14 +6,15 @@ class AppTheme {
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
+    fontFamily: "Aptos",
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
         color: MyColors.darkPink,
-        fontFamily: "Aptos Bold",
+        fontFamily: "Aptos",
         fontWeight: FontWeight.bold,
         fontSize: 26,
       ),
-      color: MyColors.lightPink,
+      color: Colors.white,
       iconTheme: IconThemeData(color: MyColors.darkPurple),
     ),
     colorScheme: ColorScheme.light(
@@ -23,9 +24,9 @@ class AppTheme {
       onPrimary: MyColors.pink,
     ),
     iconTheme: IconThemeData(color: MyColors.darkPurple),
-    scaffoldBackgroundColor: MyColors.lightPink,
+    scaffoldBackgroundColor: Colors.grey,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: MyColors.lightPink,
+      backgroundColor: Colors.white,
       selectedIconTheme: IconThemeData(color: MyColors.darkPurple),
       unselectedIconTheme: IconThemeData(color: MyColors.darkPink),
     ),
