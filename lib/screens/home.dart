@@ -41,24 +41,66 @@ class _MyHomePageState extends State<MyHomePage> {
               return Container(
                 width: double.infinity,
                 height: 120,
-                color: Colors.white,
+                // color: Colors.white,
                 margin: EdgeInsets.symmetric(vertical: 2),
-                padding: EdgeInsets.all(10.0),
-                child: Text("Weekly Statistics"),
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 15.0,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Weekly Statistics",
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        // Text("See More", style: TextStyle()),
+                      ],
+                    ),
+                    Row(
+                      spacing: 50.0,
+                      children: [
+                        Column(
+                          children: [
+                            Text("Commutes", style: TextStyle(fontSize: 10)),
+                            Text("15"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text("Time", style: TextStyle(fontSize: 10)),
+                            Text("8h 47m"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text("Distance", style: TextStyle(fontSize: 10)),
+                            Text("158km"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               );
             }
 
             // index - 1 because first item is manual
             return Container(
               width: double.infinity,
-              color: Colors.white,
+              // color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 2),
               // padding: EdgeInsets.all(30),
               height: 80,
-              // decoration: BoxDecoration(
-              //   color: Colors.blueAccent,
-              //   borderRadius: BorderRadius.circular(12),
-              // ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
             );
           },
         ),
