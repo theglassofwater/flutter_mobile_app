@@ -35,11 +35,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
         elevation: 10,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home/Journeys",
+            icon: Icon(Icons.map), // Icons.adjust_sharp
+            label: "Start",
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Start"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
         currentIndex: _selectedIndex,
