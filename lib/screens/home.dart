@@ -19,18 +19,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Widget _container(int number) {
+    return Container(
+      width: double.infinity,
+      color: Colors.white,
+      margin: EdgeInsets.symmetric(vertical: 2),
+      // padding: EdgeInsets.all(30),
+      height: 160,
+      child: Column(
+        children: [
+          Text("Day $number"),
+          Text("Time: 19:23", style: Theme.of(context).textTheme.bodySmall),
+          Row(children: [Text("hi"), Text("hello")]),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        toolbarHeight: 50,
         title: Center(child: Text(widget.title)),
         elevation: 10,
         shadowColor: const Color.fromARGB(255, 255, 255, 255),
-        // bottom: PreferredSize(
-        //   preferredSize: Size.fromHeight(1.0),
-        //   child: Divider(height: 1.0, thickness: 1.0, color: Colors.grey),
-        // ),
       ),
 
       body: SafeArea(
@@ -57,30 +71,51 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Text(
                           "Weekly Statistics",
-                          style: TextStyle(fontSize: 14),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         // Text("See More", style: TextStyle()),
                       ],
                     ),
                     Row(
-                      spacing: 50.0,
+                      spacing: 20.0,
                       children: [
                         Column(
                           children: [
-                            Text("Commutes", style: TextStyle(fontSize: 10)),
+                            Text(
+                              "Commutes",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                             Text("15"),
                           ],
                         ),
                         Column(
                           children: [
-                            Text("Time", style: TextStyle(fontSize: 10)),
+                            Text(
+                              "Time",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                             Text("8h 47m"),
                           ],
                         ),
                         Column(
                           children: [
-                            Text("Distance", style: TextStyle(fontSize: 10)),
+                            Text(
+                              "Distance",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                             Text("158km"),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "C02",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            Text(
+                              "52Kg",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
                           ],
                         ),
                       ],
@@ -91,23 +126,14 @@ class _MyHomePageState extends State<MyHomePage> {
             }
 
             // index - 1 because first item is manual
-            return Container(
-              width: double.infinity,
-              // color: Colors.white,
-              margin: EdgeInsets.symmetric(vertical: 2),
-              // padding: EdgeInsets.all(30),
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-            );
+            return _container(index);
           },
         ),
       ),
     );
   }
 }
+
 
 // ListView(
 //           children: [

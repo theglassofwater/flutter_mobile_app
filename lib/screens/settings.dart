@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app/utils/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
@@ -15,15 +17,15 @@ class SettingsPage extends StatefulWidget {
   final String title;
 
   @override
-  State<SettingsPage> createState() => _MyHomePageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _MyHomePageState extends State<SettingsPage> {
-  int _counter = 0;
+class _SettingsPageState extends State<SettingsPage> {
+  bool _isdark = false;
 
-  void _incrementCounter(int num) {
+  void darkModeSwitch(bool isdark) {
     setState(() {
-      _counter += num;
+      _isdark = !isdark;
     });
   }
 
@@ -31,28 +33,137 @@ class _MyHomePageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(child: Text(widget.title)),
+        toolbarHeight: 50,
+        title: Text(widget.title),
+        elevation: 10,
+        shadowColor: const Color.fromARGB(255, 255, 255, 255),
+        actions: [
+          Switch(
+            value: _isdark == false,
+            onChanged: (tap) {
+              darkModeSwitch(tap);
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            },
+          ),
+        ],
       ),
 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('Settings'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+      body: SafeArea(
+        child: ListView(
+          children: [
+            Container(
+              height: 25,
+              padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 0),
+              child: Text("Locations"),
             ),
+            _locationsRow(
+              context,
+              "Home",
+              "Southway 160 | Guildford Station",
+              Icons.home,
+            ),
+            _locationsRow(
+              context,
+              "Home",
+              "Lisson Grove 3 | London Waterloo Station",
+              Icons.work,
+            ),
+            Container(
+              height: 25,
+              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+              child: Text("Preferences"),
+            ),
+            ...List.generate(16, (index) {
+              return _row(context, labels[index], icons[index]);
+            }),
           ],
         ),
       ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _incrementCounter(3),
-        // tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+Widget _locationsRow(context, String text1, String text2, IconData icon) {
+  return Container(
+    width: double.infinity,
+    height: 56,
+    color: Colors.white,
+    margin: EdgeInsets.symmetric(vertical: 1),
+    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+
+    child: Row(
+      children: [
+        Icon(icon),
+        SizedBox(width: 13),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(text1, style: Theme.of(context).textTheme.bodyMedium),
+            Text(text2, style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
+        Spacer(),
+        Icon(Icons.more_horiz),
+      ],
+    ),
+  );
+}
+
+Widget _row(context, String text1, IconData icon) {
+  return Container(
+    width: double.infinity,
+    height: 56,
+    color: Colors.white,
+    margin: EdgeInsets.symmetric(vertical: 1),
+    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+
+    child: Row(
+      children: [
+        Icon(icon),
+        SizedBox(width: 13),
+        Text(text1, style: Theme.of(context).textTheme.bodyMedium),
+        Spacer(),
+        Icon(Icons.arrow_forward_ios_sharp, size: 14),
+      ],
+    ),
+  );
+}
+
+final List<String> labels = [
+  "Notifications",
+  "Privacy",
+  "Language",
+  "Account",
+  "Security",
+  "Appearance",
+  "Sounds",
+  "Location",
+  "Data Usage",
+  "Password",
+  "Help",
+  "About",
+  "Feedback",
+  "Blocked Users",
+  "Accessibility",
+  "Updates",
+];
+
+final List<IconData> icons = [
+  Icons.notifications,
+  Icons.lock_outline,
+  Icons.language,
+  Icons.person_outline,
+  Icons.security,
+  Icons.palette,
+  Icons.volume_up,
+  Icons.location_on,
+  Icons.data_usage,
+  Icons.vpn_key,
+  Icons.help_outline,
+  Icons.info_outline,
+  Icons.feedback_outlined,
+  Icons.block,
+  Icons.accessibility_new,
+  Icons.system_update,
+];

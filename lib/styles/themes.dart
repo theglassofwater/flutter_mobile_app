@@ -24,7 +24,7 @@ class AppTheme {
       onPrimary: MyColors.pink,
     ),
     iconTheme: IconThemeData(color: MyColors.darkPurple),
-    scaffoldBackgroundColor: Colors.grey,
+    scaffoldBackgroundColor: const Color.fromARGB(255, 206, 206, 206),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.white,
       selectedIconTheme: IconThemeData(color: MyColors.darkPurple),
@@ -32,5 +32,8 @@ class AppTheme {
     ),
   );
 
-  static final ThemeData darkTheme = ThemeData(brightness: Brightness.dark);
+  static final ThemeData darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    fontFamily: "Aptos",
+  );
 }

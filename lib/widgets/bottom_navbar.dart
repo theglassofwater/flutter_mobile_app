@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/home.dart';
+import 'package:flutter_mobile_app/screens/map_view.dart';
 import 'package:flutter_mobile_app/screens/profile.dart';
-import 'package:flutter_mobile_app/screens/settings.dart';
-// import 'package:flutter_mobile_app/screens/settings___.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key});
@@ -16,7 +15,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     Home(), // home == journeys
-    Settings(),
+    MapView(),
     Profile(),
   ];
 
@@ -31,14 +30,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
-        // useLegacyColorScheme: true,
-        // backgroundColor: Color.fromRGBO(0, 98, 255, 1),
         elevation: 10,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map), // Icons.adjust_sharp
-            label: "Start",
+            icon: Icon(Icons.train_sharp), // Icons.adjust_sharp
+            label: "Map",
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],

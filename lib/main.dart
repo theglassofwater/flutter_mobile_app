@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'My flutter app',
 
       home: const BottomNavBar(),
       theme: Provider.of<ThemeProvider>(context).themeData,
