@@ -29,6 +29,7 @@ lib/
   - `*_screen.dart`: UI components.
   - `*_controller.dart`: Logic and state handling.
 - UI and controller files can use `part` and `part of` directives for tight coupling.
+- (NOT IMPLEMENTED LIKE THIS YET.)
 
 ### services/
 - Contains logic for communicating with APIs, databases, or other external services.
