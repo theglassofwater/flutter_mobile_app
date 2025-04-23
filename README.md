@@ -45,6 +45,19 @@ lib/
 ### commons.dart
 - Centralized file for common imports and constants used throughout the app.
 
+
+## Packages
+
+### provider
+### flutter_map
+### latlong2
+### http
+
+## API's
+
+### OpenStreetMap (OSM)
+### OverPass API
+
 ## 🚀 Getting Started
 
 
