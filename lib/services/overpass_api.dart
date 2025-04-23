@@ -12,10 +12,9 @@ class OverpassApi {
   }) async {
     String query = """
       [out:json][timeout:25];
-      nwr["public_transport"="station"](${position.longitude - area}, ${position.latitude - area}, ${position.longitude + area}, ${position.latitude - area});
+      nwr["public_transport"="station"](${position.latitude - area}, ${position.longitude - area}, ${position.latitude + area}, ${position.longitude + area});
       out geom;
     """;
-
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -28,18 +27,37 @@ class OverpassApi {
         final List<Map<String, dynamic>> elements = processingResponse(
           data["elements"],
         );
-
-        return elements.map((elem) => POI.fromJson(elem)).toList();
+        List<POI> output = [];
+        for (var i in elements) {
+          if (i["lat"].runtimeType == double) {
+            output.add(
+              POI(
+                id: i["id"],
+                lat: i["lat"],
+                lon: i["lon"],
+                name: "hello",
+                type: i["type"],
+                tags: i["tags"],
+              ),
+            );
+          }
+        }
+        return output;
       } else {
         throw Exception("Status code: ${response.statusCode}");
       }
     } catch (e) {
-      throw Exception("Try block just failed...");
+      throw Exception("In OverpassAPI class");
     }
   }
 
   List<Map<String, dynamic>> processingResponse(dynamic data) {
-    // elements to
-    return data.map((element) => element as Map<String, dynamic>).toList();
+    List<Map<String, dynamic>> output = [];
+    for (var i in data) {
+      if (i is Map<String, dynamic>) {
+        output.add(i);
+      }
+    }
+    return output;
   }
 }
