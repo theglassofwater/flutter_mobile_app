@@ -49,15 +49,15 @@ lib/
 
 ## Packages
 
-### provider
-### flutter_map
-### latlong2
-### http
+- provider
+- flutter_map
+- latlong2
+- http
 
 ## API's
 
-### OpenStreetMap (OSM)
-### OverPass API
+- OpenStreetMap (OSM)
+- OverPass API
 
 ## 🚀 Getting Started
 
