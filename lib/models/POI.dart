@@ -1,0 +1,38 @@
+import 'package:latlong2/latlong.dart';
+
+class POI {
+  final int id;
+  final LatLng position;
+  final String name;
+  final String type;
+  final dynamic tags; // Map<String, dynamic>
+
+  POI({
+    required int this.id,
+    required LatLng this.position,
+    required String this.name,
+    required String this.type,
+    required dynamic this.tags,
+  });
+
+  factory POI.fromJson(Map<String, dynamic> json) {
+    final tags = json["tags"] as Map<String, dynamic>? ?? {};
+
+    return POI(
+      id: json["id"],
+      position: json["position"],
+      name: json["name"],
+      type: json["type"],
+      tags: tags,
+    );
+  }
+
+  String get amenityType => tags['amenity'] as String? ?? 'unknown';
+  String? get address => tags['addr:street'] as String?;
+  String? get phone => tags['phone'] as String?;
+  String? get website => tags['website'] as String?;
+  String? get openingHours => tags['opening_hours'] as String?;
+
+  @override
+  String toString() => 'POI($id, $name, $amenityType)';
+}
