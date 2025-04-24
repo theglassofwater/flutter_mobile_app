@@ -24,7 +24,7 @@ class OverpassApi {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        final List<Map<String, dynamic>> elements = processingResponse(
+        final List<Map<String, dynamic>> elements = processingElements(
           data["elements"],
         );
         List<POI> output = [];
@@ -35,7 +35,7 @@ class OverpassApi {
                 id: i["id"],
                 lat: i["lat"],
                 lon: i["lon"],
-                name: "hello",
+                name: i["name"],
                 type: i["type"],
                 tags: i["tags"],
               ),
@@ -51,13 +51,72 @@ class OverpassApi {
     }
   }
 
-  List<Map<String, dynamic>> processingResponse(dynamic data) {
-    List<Map<String, dynamic>> output = [];
-    for (var i in data) {
-      if (i is Map<String, dynamic>) {
-        output.add(i);
+  Future<POI> getPOIbyID({required int id, String type = "node"}) async {
+    final query = '[out:json];$type(id:$id);out body;';
+
+    try {
+      final response = await http.get(Uri.parse('${this.url}?data=$query'));
+
+      if (response.statusCode == 200) {
+        return processingResponseBody(response.body);
+      } else {
+        throw Exception("get by ID Status Code : ${response.statusCode}");
       }
+    } catch (e) {
+      throw Exception("get by ID failed...");
     }
-    return output;
   }
+
+  Future<POI> getPOIbyPosition({
+    // bs function
+    required LatLng position,
+    String type = "node",
+  }) async {
+    final query = '''      [out:json];
+      (
+        node(around:1,51.20,0.61)[~"."~"."];
+        way(around:1,51.20,0.61)[~"."~"."];
+        relation(around:1,51.20,0.61)[~"."~"."];
+      );
+      out geom;''';
+
+    try {
+      final response = await http.get(Uri.parse('${this.url}?data=$query'));
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        return processingResponseBody(response.body);
+      } else {
+        throw Exception("get by ID Status Code : ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("get by ID failed...");
+    }
+  }
+}
+
+List<Map<String, dynamic>> processingElements(dynamic data) {
+  List<Map<String, dynamic>> output = [];
+  for (var i in data) {
+    if (i is Map<String, dynamic>) {
+      output.add(i);
+    }
+  }
+  return output;
+}
+
+POI processingResponseBody(String body) {
+  final Map<String, dynamic> data = json.decode(body);
+  final List<Map<String, dynamic>> elements = processingElements(
+    data["elements"],
+  );
+  POI output = POI(
+    id: elements[0]["id"],
+    lat: elements[0]["lat"],
+    lon: elements[0]["lon"],
+    name: elements[0]["name"],
+    type: elements[0]["type"],
+    tags: elements[0]["tags"],
+  );
+  return output;
 }
