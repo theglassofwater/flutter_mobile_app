@@ -36,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
         toolbarHeight: 50,
         title: Text(widget.title),
         centerTitle: true,
+        shadowColor: const Color.fromARGB(255, 255, 255, 255),
         leading: IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {

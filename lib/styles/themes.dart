@@ -34,6 +34,6 @@ class AppTheme {
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    fontFamily: "Aptos",
+    fontFamily: "SfBold",
   );
 }

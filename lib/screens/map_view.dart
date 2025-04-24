@@ -49,6 +49,8 @@ class _MapViewState extends State<MapViewPage> {
         toolbarHeight: 50,
         // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Center(child: Text(widget.title)),
+        elevation: 10,
+        shadowColor: const Color.fromARGB(255, 255, 255, 255),
       ),
 
       body: SafeArea(
@@ -68,7 +70,10 @@ class _MapViewState extends State<MapViewPage> {
                   _pois.map((poi) {
                     return Marker(
                       point: poi.position,
-                      child: GestureDetector(child: Icon(Icons.train_sharp)),
+                      child: GestureDetector(
+                        child: Icon(Icons.train_sharp),
+                        onTap: () => print(poi),
+                      ),
                     );
                   }).toList(),
             ),
@@ -78,7 +83,7 @@ class _MapViewState extends State<MapViewPage> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => loadPOIs(_mapController.camera.center, area: 0.1),
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.wifi_tethering),
       ),
     );
   }
