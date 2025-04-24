@@ -58,6 +58,7 @@ lib/
 
 - OpenStreetMap (OSM)
 - OverPass API
+- Nominatim API
 
 ## 🚀 Getting Started
 
