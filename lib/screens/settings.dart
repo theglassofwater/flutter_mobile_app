@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app/models/Address.dart';
+import 'package:flutter_mobile_app/models/Location.dart';
+import 'package:flutter_mobile_app/models/POI.dart';
+import 'package:flutter_mobile_app/services/nominatim_api.dart';
+import 'package:flutter_mobile_app/services/overpass_api.dart';
 import 'package:flutter_mobile_app/utils/theme_provider.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
@@ -21,12 +27,52 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final OverpassApi _overpassApi = OverpassApi();
+  final NominatimApi _nominatimApi = NominatimApi();
   bool _isdark = false;
+  final Location _home = Location();
+  final Location _work = Location();
+
+  Future<void> loadLocation(
+    Location location,
+    LatLng addressPosition,
+    int stationId,
+  ) async {
+    try {
+      POI station = await _overpassApi.getPOIbyID(id: stationId);
+      Address address = await _nominatimApi.getAddressByPosition(
+        position: addressPosition,
+      );
+
+      setState(() {
+        location.station = station;
+        location.address = address;
+      });
+    } catch (e) {
+      throw Exception("");
+    }
+  }
 
   void darkModeSwitch(bool isdark) {
     setState(() {
       _isdark = !isdark;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadLocation(
+      _home,
+      LatLng(51.24372380970368, -0.600301771646355),
+      5863634798,
+    );
+    loadLocation(
+      _work,
+      LatLng(51.521555305395786, -0.1648146847784949),
+      5206785234,
+    ); // 402767337 3638795617
+    // loadStation(402767337, "work", _overpassApi);
   }
 
   @override
@@ -59,14 +105,16 @@ class _SettingsPageState extends State<SettingsPage> {
             _locationsRow(
               context,
               "Home",
-              "Southway 160 | Guildford Station",
+              "${_home.address?.shortName == null ? "Loading" : "${_home.address?.shortName}"} | ${_home.station?.name == null ? "Loading" : "${_home.station?.name} Station"}",
               Icons.home,
+              () => (print(_home.address)),
             ),
             _locationsRow(
               context,
-              "Home",
-              "Lisson Grove 3 | London Waterloo Station",
+              "Work",
+              "${_work.address?.shortName == null ? "Loading" : "${_work.address?.shortName}"} | ${_work.station?.name == null ? "Loading" : "${_work.station?.name} Station"}",
               Icons.work,
+              () => (print(_work.address)),
             ),
             Container(
               height: 25,
@@ -83,7 +131,13 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
-Widget _locationsRow(context, String text1, String text2, IconData icon) {
+Widget _locationsRow(
+  context,
+  String text1,
+  String text2,
+  IconData icon,
+  VoidCallback onTap,
+) {
   return Container(
     width: double.infinity,
     height: 56,
@@ -104,7 +158,7 @@ Widget _locationsRow(context, String text1, String text2, IconData icon) {
           ],
         ),
         Spacer(),
-        Icon(Icons.more_horiz),
+        GestureDetector(onTap: onTap, child: Icon(Icons.more_horiz)),
       ],
     ),
   );
