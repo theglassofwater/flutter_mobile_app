@@ -1,12 +1,10 @@
-import 'dart:math';
-
 import 'package:latlong2/latlong.dart';
 
 class POI {
   final int id;
   final double lon;
   final double lat;
-  final String name;
+  String? name;
   final String type;
   final dynamic tags; // Map<String, dynamic>
 
@@ -14,10 +12,14 @@ class POI {
     required int this.id,
     required double this.lat,
     required double this.lon,
-    required String this.name,
+    required String? this.name,
     required String this.type,
     required dynamic this.tags,
-  });
+  }) {
+    if (this.name == null && this.tags["name"] != null) {
+      this.name = this.tags["name"];
+    }
+  }
 
   factory POI.fromJson(Map<String, dynamic> json) {
     final tags = json["tags"] as Map<String, dynamic>? ?? {};
@@ -43,5 +45,5 @@ class POI {
   String? get openingHours => tags['opening_hours'] as String?;
 
   @override
-  String toString() => 'POI($id, $name, $amenityType)';
+  String toString() => 'POI($id, $name, $position)';
 }
