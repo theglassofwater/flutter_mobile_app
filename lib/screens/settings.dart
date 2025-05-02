@@ -85,7 +85,11 @@ class _SettingsPageState extends State<SettingsPage> {
         shadowColor: const Color.fromARGB(255, 255, 255, 255),
         actions: [
           Switch(
-            value: _isdark == false,
+            value:
+                _isdark ==
+                (Provider.of<ThemeProvider>(context).theme == "dark"
+                    ? false
+                    : true),
             onChanged: (tap) {
               darkModeSwitch(tap);
               Provider.of<ThemeProvider>(context, listen: false).toggleTheme();

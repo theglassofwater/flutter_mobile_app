@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/onboarding.dart';
+import 'package:flutter_mobile_app/services/theme_storage.dart';
 import 'package:flutter_mobile_app/utils/theme_provider.dart';
 import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  final isDark = await ThemeStorage().isDark();
+
   runApp(
     ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+      create: (context) => ThemeProvider(isDark),
       child: const MyApp(),
     ),
   );
