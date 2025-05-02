@@ -61,253 +61,259 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _signUpPage() {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          LinearProgressIndicator(
-            value: currentStep / 2, // e.g. 0.5 for step 1, 1.0 for step 2
-            backgroundColor: Colors.grey[300],
-            color: MyColors.darkPurple,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.looks_one_rounded,
-                      color:
-                          currentStep >= 1 ? MyColors.darkPurple : Colors.grey,
-                    ),
-                    Text(
-                      "Quick Sign Up",
-                      style: TextStyle(
-                        color:
-                            currentStep >= 1
-                                ? MyColors.darkPurple
-                                : Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.looks_two_rounded,
-                      color:
-                          currentStep >= 2 ? MyColors.darkPurple : Colors.grey,
-                    ),
-                    Text(
-                      "Set Locations (Optional)",
-                      style: TextStyle(
-                        color:
-                            currentStep >= 2
-                                ? MyColors.darkPurple
-                                : Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Spacer(), // Put image or something
-          FadeInUp(
-            delay: Duration(milliseconds: 300),
-            duration: Duration(milliseconds: 1200),
-            child: TextField(
-              cursorColor: Colors.black,
-              style: TextStyle(color: Colors.green),
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.person),
-                labelText: "Email",
-                labelStyle: TextStyle(color: Colors.black),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ...topBar(currentStep),
+        Spacer(), // Put image or something
+        FadeInUp(
+          delay: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 1200),
+          child: TextField(
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.person),
+              labelText: "Email",
+              labelStyle: TextStyle(color: Colors.black),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
               ),
             ),
           ),
-          SizedBox(height: 35),
-          FadeInUp(
-            delay: Duration(milliseconds: 300),
-            duration: Duration(milliseconds: 800),
-            child: TextField(
-              cursorColor: Colors.black,
-              style: TextStyle(color: Colors.green),
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.key),
-                labelText: "Password",
-                labelStyle: TextStyle(color: Colors.black),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                ),
+        ),
+        SizedBox(height: 35),
+        FadeInUp(
+          delay: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 800),
+          child: TextField(
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.key),
+              labelText: "Password",
+              labelStyle: TextStyle(color: Colors.black),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
               ),
             ),
           ),
-          SizedBox(height: 80),
-          Row(
-            spacing: 30,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MaterialButton(
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                // height: 50,
-                onPressed:
-                    () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BottomNavBar()),
-                      ),
-                    },
-                child: Text(
-                  " Register ",
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+        ),
+        SizedBox(height: 35),
+        FadeInUp(
+          delay: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 800),
+          child: TextField(
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.key),
+              labelText: "Repeat Password",
+              labelStyle: TextStyle(color: Colors.black),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
               ),
-              MaterialButton(
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-
-                // height: 50,
-                onPressed:
-                    () => {
-                      controller.nextPage(
-                        duration: Duration(milliseconds: 100),
-                        curve: Curves.bounceIn,
-                      ),
-                      setState(() {
-                        currentStep = 2;
-                      }),
-                    },
-                child: Text(
-                  "Next Step",
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-            ],
+            ),
           ),
-          SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Already have an acount?"),
-              TextButton(
-                onPressed:
-                    () => Navigator.push(
+        ),
+        SizedBox(height: 80),
+        Row(
+          spacing: 30,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MaterialButton(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              // height: 50,
+              onPressed:
+                  () => {
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => BottomNavBar()),
                     ),
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: MyColors.darkPurple),
-                ),
+                  },
+              child: Text(
+                " Register ",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+            MaterialButton(
+              color: Colors.black,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+
+              // height: 50,
+              onPressed:
+                  () => {
+                    controller.nextPage(
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.bounceIn,
+                    ),
+                    setState(() {
+                      currentStep = 2;
+                    }),
+                  },
+              child: Text(
+                "Next Step",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Already have an acount?"),
+            TextButton(
+              onPressed:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  ),
+              child: Text(
+                "Login",
+                style: TextStyle(color: MyColors.darkPurple),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 70),
+      ],
+    );
+  }
+
+  Widget _locationPage() {
+    return Expanded(
+      child: Stack(
+        children: [
+          FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(initialCenter: LatLng(51.24, -0.57)),
+            children: [
+              TileLayer(
+                urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                userAgentPackageName: 'com.example.app',
+                additionalOptions: const {
+                  'attribution': '© OpenStreetMap contributors',
+                },
+              ),
+              MarkerLayer(
+                markers:
+                    _pois.map((poi) {
+                      return Marker(
+                        point: poi.position,
+                        child: GestureDetector(
+                          child: Icon(Icons.train_sharp),
+                          onTap: () => print(poi),
+                        ),
+                      );
+                    }).toList(),
               ),
             ],
           ),
-          SizedBox(height: 70),
+          ...topBar(currentStep),
+          Positioned(
+            top: 60,
+            left: 20,
+            right: 20,
+            height: 55,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 2),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                spacing: 6,
+                children: [
+                  Icon(Icons.search),
+
+                  SizedBox(
+                    height: 25,
+                    child: VerticalDivider(
+                      color: Colors.grey.shade400,
+                      thickness: 1,
+                      width: 20,
+                    ),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Where are you going?",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 0,
+                          horizontal: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => print("tapped bookmark Icon, map_view screen"),
+                    child: Icon(Icons.bookmark),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Container()
         ],
       ),
     );
   }
 
-  Widget _locationPage() {
-    return Stack(
-      children: [
-        FlutterMap(
-          mapController: _mapController,
-          options: MapOptions(initialCenter: LatLng(51.24, -0.57)),
-          children: [
-            TileLayer(
-              urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              userAgentPackageName: 'com.example.app',
-              additionalOptions: const {
-                'attribution': '© OpenStreetMap contributors',
-              },
-            ),
-            MarkerLayer(
-              markers:
-                  _pois.map((poi) {
-                    return Marker(
-                      point: poi.position,
-                      child: GestureDetector(
-                        child: Icon(Icons.train_sharp),
-                        onTap: () => print(poi),
-                      ),
-                    );
-                  }).toList(),
-            ),
-          ],
-        ),
-        Positioned(
-          top: 20,
-          left: 20,
-          right: 20,
-          height: 55,
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 2),
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              spacing: 6,
+  List<Widget> topBar(int currentStep) {
+    return [
+      LinearProgressIndicator(
+        value: currentStep / 2, // e.g. 0.5 for step 1, 1.0 for step 2
+        backgroundColor: Colors.grey[300],
+        color: MyColors.darkPurple,
+      ),
+      Row(
+        children: [
+          Expanded(
+            child: Column(
               children: [
-                Icon(Icons.search),
-
-                SizedBox(
-                  height: 25,
-                  child: VerticalDivider(
-                    color: Colors.grey.shade400,
-                    thickness: 1,
-                    width: 20,
-                  ),
+                Icon(
+                  Icons.looks_one_rounded,
+                  color: currentStep >= 1 ? MyColors.darkPurple : Colors.grey,
                 ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Where are you going?",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 10,
-                      ),
-                    ),
+                Text(
+                  "Quick Sign Up",
+                  style: TextStyle(
+                    color: currentStep >= 1 ? MyColors.darkPurple : Colors.grey,
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => print("tapped bookmark Icon, map_view screen"),
-                  child: Icon(Icons.bookmark),
                 ),
               ],
             ),
           ),
-        ),
-        // Container()
-      ],
-    );
-    //   ),
-
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: () => loadPOIs(_mapController.camera.center, area: 0.1),
-    //     child: const Icon(Icons.wifi_tethering),
-    //   ),
-    // );
+          Expanded(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.looks_two_rounded,
+                  color: currentStep >= 2 ? MyColors.darkPurple : Colors.grey,
+                ),
+                Text(
+                  "Set Locations (Optional)",
+                  style: TextStyle(
+                    color: currentStep >= 2 ? MyColors.darkPurple : Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ];
   }
 }
