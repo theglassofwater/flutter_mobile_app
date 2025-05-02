@@ -53,6 +53,10 @@ lib/
 - flutter_map
 - latlong2
 - http
+- flutter_svg
+- smooth_page_indicator
+- lottie
+- animate_do
 
 ## API's
 
