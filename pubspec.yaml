@@ -38,6 +38,10 @@ dependencies:
   flutter_map: # ^6.0.0
   latlong2: # ^0.8.1
   http: # ^1.1.0
+  flutter_svg: 
+  smooth_page_indicator:
+  lottie:
+  animate_do:
 
 dev_dependencies:
   flutter_test:
@@ -75,9 +79,12 @@ flutter:
         - asset: assets/fonts/SF-Pro-Display-Bold.otf
           weight: 700
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/svg/arrow_right.svg
+    - assets/images/long_double_arrow.jpg
+    - assets/images/svg/train_curved.svg
+    - assets/images/json/train_curved.json
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
