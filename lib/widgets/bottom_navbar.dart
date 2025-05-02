@@ -4,7 +4,8 @@ import 'package:flutter_mobile_app/screens/map_view.dart';
 import 'package:flutter_mobile_app/screens/profile.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key});
+  // const BottomNavBar({super.key, Key? key});
+  const BottomNavBar({super.key});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();

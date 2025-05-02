@@ -24,7 +24,7 @@ class NominatimApi {
 
   Future<Address> getAddressByPosition({required LatLng position}) async {
     final uri = Uri.parse(
-      '${url}/reverse?format=jsonv2&lat=${position.latitude}&lon=${position.longitude}&addressdetails=1',
+      '$url/reverse?format=jsonv2&lat=${position.latitude}&lon=${position.longitude}&addressdetails=1',
     );
 
     try {
@@ -50,8 +50,8 @@ class NominatimApi {
         //     boundingBox: ${data["boundingbox"].runtimeType},
         //   );
         //   """);
-        // List<String> display_name = data["display_name"].split(",");
-        //.map((str) => str.trim()).toList();
+
+        // List<String> display_name = data["display_name"].split(",").map((str) => str.trim()).toList();
 
         final output = Address(
           place_id: data["place_id"],

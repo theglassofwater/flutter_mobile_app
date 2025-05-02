@@ -55,7 +55,7 @@ class OverpassApi {
     final query = '[out:json];$type(id:$id);out body;';
 
     try {
-      final response = await http.get(Uri.parse('${this.url}?data=$query'));
+      final response = await http.get(Uri.parse('${url}?data=$query'));
 
       if (response.statusCode == 200) {
         return processingResponseBody(response.body);
@@ -81,10 +81,9 @@ class OverpassApi {
       out geom;''';
 
     try {
-      final response = await http.get(Uri.parse('${this.url}?data=$query'));
+      final response = await http.get(Uri.parse('${url}?data=$query'));
 
       if (response.statusCode == 200) {
-        print(response.body);
         return processingResponseBody(response.body);
       } else {
         throw Exception("get by ID Status Code : ${response.statusCode}");
