@@ -5,7 +5,7 @@ import 'package:flutter_mobile_app/services/overpass_api.dart';
 import 'package:latlong2/latlong.dart';
 
 class MapView extends StatelessWidget {
-  const MapView({Key? key}) : super(key: key);
+  const MapView({super.key});
 
   // This widget is the root of your application.
   @override
@@ -45,38 +45,93 @@ class _MapViewState extends State<MapViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 50,
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Center(child: Text(widget.title)),
-        elevation: 10,
-        shadowColor: const Color.fromARGB(255, 255, 255, 255),
-      ),
-
+      // appBar: AppBar(
+      //   toolbarHeight: 50,
+      //   // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //   title: Center(child: Text(widget.title)),
+      //   elevation: 10,
+      //   shadowColor: const Color.fromARGB(255, 255, 255, 255),
+      // ),
       body: SafeArea(
-        child: FlutterMap(
-          mapController: _mapController,
-          options: MapOptions(initialCenter: LatLng(51.24, -0.57)),
+        child: Stack(
           children: [
-            TileLayer(
-              urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              userAgentPackageName: 'com.example.app',
-              additionalOptions: const {
-                'attribution': '© OpenStreetMap contributors',
-              },
+            FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(initialCenter: LatLng(51.24, -0.57)),
+              children: [
+                TileLayer(
+                  urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  userAgentPackageName: 'com.example.app',
+                  additionalOptions: const {
+                    'attribution': '© OpenStreetMap contributors',
+                  },
+                ),
+                MarkerLayer(
+                  markers:
+                      _pois.map((poi) {
+                        return Marker(
+                          point: poi.position,
+                          child: GestureDetector(
+                            child: Icon(Icons.train_sharp),
+                            onTap: () => print(poi),
+                          ),
+                        );
+                      }).toList(),
+                ),
+              ],
             ),
-            MarkerLayer(
-              markers:
-                  _pois.map((poi) {
-                    return Marker(
-                      point: poi.position,
-                      child: GestureDetector(
-                        child: Icon(Icons.train_sharp),
-                        onTap: () => print(poi),
+            Positioned(
+              top: 20,
+              left: 20,
+              right: 20,
+              height: 55,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 2),
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  spacing: 6,
+                  children: [
+                    Icon(Icons.search),
+
+                    SizedBox(
+                      height: 25,
+                      child: VerticalDivider(
+                        color: Colors.grey.shade400,
+                        thickness: 1,
+                        width: 20,
                       ),
-                    );
-                  }).toList(),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Where are you going?",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap:
+                          () => print("tapped bookmark Icon, map_view screen"),
+                      child: Icon(Icons.bookmark),
+                    ),
+                  ],
+                ),
+              ),
             ),
+            // Container()
           ],
         ),
       ),

@@ -9,7 +9,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
-  const Settings({Key? key}) : super(key: key);
+  const Settings({super.key});
 
   // This widget is the root of your application.
   @override
@@ -98,8 +98,8 @@ class _SettingsPageState extends State<SettingsPage> {
         child: ListView(
           children: [
             Container(
-              height: 25,
-              padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 0),
+              height: 22,
+              padding: EdgeInsets.only(top: 1, left: 2),
               child: Text("Locations"),
             ),
             _locationsRow(
@@ -107,22 +107,35 @@ class _SettingsPageState extends State<SettingsPage> {
               "Home",
               "${_home.address?.shortName == null ? "Loading" : "${_home.address?.shortName}"} | ${_home.station?.name == null ? "Loading" : "${_home.station?.name} Station"}",
               Icons.home,
-              () => (print(_home.address)),
+              () => (print(_home)),
             ),
             _locationsRow(
               context,
               "Work",
               "${_work.address?.shortName == null ? "Loading" : "${_work.address?.shortName}"} | ${_work.station?.name == null ? "Loading" : "${_work.station?.name} Station"}",
               Icons.work,
-              () => (print(_work.address)),
+              () => (print(_work)),
             ),
             Container(
-              height: 25,
-              margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-              child: Text("Preferences"),
+              height: 22,
+              margin: EdgeInsets.only(top: 1, left: 2),
+              child: Text("Preferences (dummy)"),
             ),
-            ...List.generate(16, (index) {
+            ...List.generate(6, (index) {
               return _row(context, labels[index], icons[index]);
+            }),
+            Container(
+              height: 22,
+              margin: EdgeInsets.only(top: 1, left: 2),
+              child: Text("Account (dummy)"),
+            ),
+            ...List.generate(3, (index) {
+              return _row(
+                context,
+                labels_account[index],
+                icons_account[index],
+                isAccount: true,
+              );
             }),
           ],
         ),
@@ -164,7 +177,7 @@ Widget _locationsRow(
   );
 }
 
-Widget _row(context, String text1, IconData icon) {
+Widget _row(context, String text1, IconData icon, {bool isAccount = false}) {
   return Container(
     width: double.infinity,
     height: 56,
@@ -174,7 +187,7 @@ Widget _row(context, String text1, IconData icon) {
 
     child: Row(
       children: [
-        Icon(icon),
+        Icon(icon, color: isAccount ? Colors.red : null),
         SizedBox(width: 13),
         Text(text1, style: Theme.of(context).textTheme.bodyMedium),
         Spacer(),
@@ -220,4 +233,16 @@ final List<IconData> icons = [
   Icons.block,
   Icons.accessibility_new,
   Icons.system_update,
+];
+
+final List<String> labels_account = [
+  "Change Password",
+  "Log Out",
+  "Delete Account",
+];
+
+final List<IconData> icons_account = [
+  Icons.password_rounded,
+  Icons.logout_rounded,
+  Icons.delete_forever_outlined,
 ];

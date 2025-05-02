@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   // This widget is the root of your application.
   @override
@@ -19,28 +19,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Widget _container(int number) {
-    return Container(
-      width: double.infinity,
-      color: Colors.white,
-      margin: EdgeInsets.symmetric(vertical: 2),
-      // padding: EdgeInsets.all(30),
-      height: 160,
-      child: Column(
-        children: [
-          Text("Day $number"),
-          Text("Time: 19:23", style: Theme.of(context).textTheme.bodySmall),
-          Row(children: [Text("hi"), Text("hello")]),
-        ],
-      ),
-    );
-  }
+  // final svgPicture = SvgPicture.asset(
+  //   'assets/images/arrow_right.svg',
+  //   semanticsLabel: 'Arrow',
+  //   height: 70,
+  // );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        automaticallyImplyLeading: false,
         toolbarHeight: 50,
         title: Center(child: Text(widget.title)),
         elevation: 10,
@@ -126,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             }
 
             // index - 1 because first item is manual
-            return _container(index);
+            return _container(context, index);
           },
         ),
       ),
@@ -134,7 +124,66 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
+Widget _container(context, int number) {
+  return Container(
+    width: double.infinity,
+    color: Colors.white,
+    margin: EdgeInsets.symmetric(vertical: 2),
+    padding: EdgeInsets.all(10),
+    height: 160,
+    child: Column(
+      children: [
+        Text("Day $number"),
+        // Text("Time: 19:23", style: Theme.of(context).textTheme.bodySmall),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 90,
+              height: 114,
+              // color: Colors.red,
+              child: Text("Home", textAlign: TextAlign.center),
+            ),
+            Container(
+              width: 165,
+              height: 114,
+              padding: EdgeInsets.only(top: 20),
+              // color: const Color.fromARGB(255, 176, 176, 176),
+              child: Column(
+                children: [
+                  Text(
+                    "08:06 - 08:57",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  Image(
+                    image: AssetImage('assets/images/long_double_arrow.jpg'),
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    "17:26 - 18:15",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage('assets/images/long_double_arrow.jpg'),
+              //     fit: BoxFit.contain, // or .contain / .fill etc
+              //   ),
+              // ),
+            ),
+            SizedBox(
+              width: 90,
+              height: 114,
+              // color: Colors.red,
+              child: Text("Work", textAlign: TextAlign.center),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
 // ListView(
 //           children: [
 //             Container(width: double.infinity, height: 150, color: Colors.blue),
