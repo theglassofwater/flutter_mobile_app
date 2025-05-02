@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_app/screens/settings.dart';
 import 'package:flutter_mobile_app/screens/sign_up.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
@@ -24,14 +23,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  int _counter = 0;
-
-  void _incrementCounter(int num) {
-    setState(() {
-      _counter += num;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +45,6 @@ class _LoginPageState extends State<LoginPage> {
               duration: Duration(milliseconds: 1200),
               child: TextField(
                 cursorColor: Colors.black,
-                style: TextStyle(color: Colors.green),
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   labelText: "Email",
@@ -71,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
               duration: Duration(milliseconds: 800),
               child: TextField(
                 cursorColor: Colors.black,
-                style: TextStyle(color: Colors.green),
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.key),
                   labelText: "Password",
