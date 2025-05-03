@@ -6,9 +6,10 @@ import 'package:latlong2/latlong.dart';
 class OverpassApi {
   final String url = "https://overpass-api.de/api/interpreter";
 
-  Future<List<POI>> getPOIsBox({
+  Future<List<POI>> getPOIsByArea({
     required LatLng position,
     required double area,
+    bool isLocation = false,
   }) async {
     String query = """
       [out:json][timeout:25];

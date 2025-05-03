@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:flutter_mobile_app/widgets/map.dart';
 
 class MapView extends StatelessWidget {
   const MapView({super.key});
@@ -26,11 +27,12 @@ class _MapViewState extends State<MapViewPage> {
   final OverpassApi _overpassApi = OverpassApi();
   final MapController _mapController = MapController();
   List<POI> _pois = [];
+  LatLng currentPos = LatLng(51.24, -0.57);
   // call api for POI's
 
   Future<void> loadPOIs(LatLng position, {double area = 0.02}) async {
     try {
-      List<POI> response = await _overpassApi.getPOIsBox(
+      List<POI> response = await _overpassApi.getPOIsByArea(
         position: position,
         area: area,
       );
@@ -55,31 +57,7 @@ class _MapViewState extends State<MapViewPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            FlutterMap(
-              mapController: _mapController,
-              options: MapOptions(initialCenter: LatLng(51.24, -0.57)),
-              children: [
-                TileLayer(
-                  urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                  userAgentPackageName: 'com.example.app',
-                  additionalOptions: const {
-                    'attribution': '© OpenStreetMap contributors',
-                  },
-                ),
-                MarkerLayer(
-                  markers:
-                      _pois.map((poi) {
-                        return Marker(
-                          point: poi.position,
-                          child: GestureDetector(
-                            child: Icon(Icons.train_sharp),
-                            onTap: () => print(poi),
-                          ),
-                        );
-                      }).toList(),
-                ),
-              ],
-            ),
+            MyMap(controller: _mapController, coord: currentPos, pois: _pois),
             Positioned(
               top: 20,
               left: 20,

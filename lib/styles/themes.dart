@@ -24,8 +24,13 @@ class AppTheme {
       onPrimary: MyColors.pink,
     ),
     iconTheme: IconThemeData(color: MyColors.darkPurple),
-    // scaffoldBackgroundColor: const Color.fromARGB(255, 206, 206, 206), // grey background
-    scaffoldBackgroundColor: MyColors.lightPink,
+    scaffoldBackgroundColor: const Color.fromARGB(
+      255,
+      206,
+      206,
+      206,
+    ), // grey background
+    // scaffoldBackgroundColor: MyColors.lightPink,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.white,
       selectedIconTheme: IconThemeData(color: MyColors.darkPurple),
