@@ -6,6 +6,11 @@ class Location {
   Address? address;
 
   // Location(POI this.station, dynamic this.address) {}
+  // Location({this.station, this.address})
+  //   : assert(
+  //       station != null || address != null,
+  //       'Location must have at least a station or an address',
+  //     );
 
   @override
   String toString() {
