@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/login.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
-import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
+import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
 import 'package:flutter_mobile_app/widgets/button.dart';
 import 'package:flutter_mobile_app/widgets/topBar.dart';
 

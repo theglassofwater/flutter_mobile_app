@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/onboarding.dart';
 import 'package:flutter_mobile_app/services/theme_storage.dart';
 import 'package:flutter_mobile_app/utils/theme_provider.dart';
-import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
+import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {

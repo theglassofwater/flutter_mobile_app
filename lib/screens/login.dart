@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/sign_up.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
-import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
-import 'package:flutter_mobile_app/widgets/login_form.dart';
+import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
+import 'package:flutter_mobile_app/big_widgets/login_form.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

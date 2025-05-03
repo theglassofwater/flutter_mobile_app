@@ -6,9 +6,9 @@ import 'package:flutter_mobile_app/models/POI.dart';
 import 'package:flutter_mobile_app/screens/login.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
-import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
-import 'package:flutter_mobile_app/widgets/location_selection_form.dart';
-import 'package:flutter_mobile_app/widgets/sign_up_form.dart';
+import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
+import 'package:flutter_mobile_app/big_widgets/location_selection_form.dart';
+import 'package:flutter_mobile_app/big_widgets/sign_up_form.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
 
