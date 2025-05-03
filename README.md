@@ -21,6 +21,9 @@ lib/
 └── main.dart
 </pre>
 
+### big_widgets/
+- Large Reusable UI components that can be shared between screens.
+
 ### models/
 - Contains data model classes representing the structure of data used in the app.
 

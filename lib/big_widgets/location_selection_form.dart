@@ -48,7 +48,7 @@ class _LocationSelectionState extends State<LocationSelection> {
         pois = response;
       });
     } catch (e) {
-      throw Exception("hello");
+      throw Exception("LoadPOIs function Exception");
     }
   }
 
@@ -73,13 +73,13 @@ class _LocationSelectionState extends State<LocationSelection> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: double.infinity,
-      width: double.infinity,
+    return Container(
+      // height: double.infinity,
+      // width: double.infinity,
       child: Stack(
         children: [
           MyMap(controller: _mapController, coord: currentPos, pois: pois),
-          ...topBar(
+          topBar(
             currentStep: 3,
             setStep: widget.setStep,
             controller: widget.controller,

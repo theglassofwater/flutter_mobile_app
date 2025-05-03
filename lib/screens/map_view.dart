@@ -54,66 +54,67 @@ class _MapViewState extends State<MapViewPage> {
       //   elevation: 10,
       //   shadowColor: const Color.fromARGB(255, 255, 255, 255),
       // ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            MyMap(controller: _mapController, coord: currentPos, pois: _pois),
-            Positioned(
-              top: 20,
-              left: 20,
-              right: 20,
-              height: 55,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 2),
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  spacing: 6,
-                  children: [
-                    Icon(Icons.search),
+      body:
+      // SafeArea(
+      //   child:
+      Stack(
+        children: [
+          MyMap(controller: _mapController, coord: currentPos, pois: _pois),
+          Positioned(
+            top: 20,
+            left: 20,
+            right: 20,
+            height: 55,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 2),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                spacing: 6,
+                children: [
+                  Icon(Icons.search),
 
-                    SizedBox(
-                      height: 25,
-                      child: VerticalDivider(
-                        color: Colors.grey.shade400,
-                        thickness: 1,
-                        width: 20,
-                      ),
+                  SizedBox(
+                    height: 25,
+                    child: VerticalDivider(
+                      color: Colors.grey.shade400,
+                      thickness: 1,
+                      width: 20,
                     ),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Where are you going?",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 0,
-                            horizontal: 10,
-                          ),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Where are you going?",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 0,
+                          horizontal: 10,
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap:
-                          () => print("tapped bookmark Icon, map_view screen"),
-                      child: Icon(Icons.bookmark),
-                    ),
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                    onTap: () => print("tapped bookmark Icon, map_view screen"),
+                    child: Icon(Icons.bookmark),
+                  ),
+                ],
               ),
             ),
-            // Container()
-          ],
-        ),
+          ),
+          // Container()
+        ],
       ),
 
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => loadPOIs(_mapController.camera.center, area: 0.1),
         child: const Icon(Icons.wifi_tethering),

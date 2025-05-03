@@ -80,9 +80,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                       onPressed:
                           () => {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => Login()),
+                              MaterialPageRoute(builder: (_) => Login()),
                             ),
                           },
                       child: Text(
@@ -102,9 +102,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                       onPressed:
                           () => {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => SignUp()),
+                              MaterialPageRoute(builder: (_) => SignUp()),
                             ),
                           },
                       child: Text(

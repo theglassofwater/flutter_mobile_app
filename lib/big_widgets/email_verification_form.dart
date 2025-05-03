@@ -1,15 +1,20 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app/screens/login.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/widgets/text_field.dart';
+import 'package:flutter_mobile_app/widgets/topBar.dart';
 
-class LoginForm extends StatelessWidget {
-  final Function onLogin;
-  final Function switchToSignUp;
-  const LoginForm({
+class EmailVerificationForm extends StatelessWidget {
+  final Function onSubmit;
+  final PageController controller;
+  final void Function(int step) setStep;
+
+  const EmailVerificationForm({
     super.key,
-    required this.onLogin,
-    required this.switchToSignUp,
+    required this.onSubmit,
+    required this.controller,
+    required this.setStep,
   });
 
   @override
@@ -18,11 +23,13 @@ class LoginForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          topBar(currentStep: 2, setStep: setStep, controller: controller),
           Spacer(), // Put image or something
-          MyTextField(labelText: "Email", icon: Icon(Icons.person)),
-          SizedBox(height: 35),
-          MyTextField(labelText: "Password", icon: Icon(Icons.key)),
-          SizedBox(height: 80),
+          MyTextField(
+            labelText: "Email Verification Code",
+            icon: Icon(Icons.pin),
+          ),
+          SizedBox(height: 150),
           Row(
             spacing: 30,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,9 +40,9 @@ class LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                onPressed: () => onLogin(),
+                onPressed: () => (controller.jumpToPage(2)),
                 child: Text(
-                  " Login ",
+                  " Submit Code ",
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
@@ -45,11 +52,15 @@ class LoginForm extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Don't have an acount?"),
+              Text("Already have an acount?"),
               TextButton(
-                onPressed: () => switchToSignUp(),
+                onPressed:
+                    () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => Login()),
+                    ),
                 child: Text(
-                  "Sign Up",
+                  "Login",
                   style: TextStyle(color: MyColors.darkPurple),
                 ),
               ),

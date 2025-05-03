@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_mobile_app/big_widgets/email_verification_form.dart';
 import 'package:flutter_mobile_app/models/Address.dart';
 import 'package:flutter_mobile_app/models/Location.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
@@ -59,6 +60,12 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  void setStep(int step) {
+    setState(() {
+      currentStep = step;
+    });
+  }
+
   // Proccessing Location Selection
 
   @override
@@ -77,13 +84,15 @@ class _SignUpPageState extends State<SignUpPage> {
             onSignUp: onSignUp,
             switchToLogin: switchToLogin,
           ),
+          EmailVerificationForm(
+            controller: controller,
+            setStep: setStep,
+            onSubmit: () => {},
+          ),
           LocationSelection(
             mapController: _mapController,
             controller: controller,
-            setStep:
-                (step) => setState(() {
-                  currentStep = step;
-                }),
+            setStep: setStep,
             onSignUp: onSignUp,
           ),
         ],

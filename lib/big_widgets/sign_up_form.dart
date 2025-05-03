@@ -4,6 +4,7 @@ import 'package:flutter_mobile_app/screens/login.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
 import 'package:flutter_mobile_app/widgets/button.dart';
+import 'package:flutter_mobile_app/widgets/text_field.dart';
 import 'package:flutter_mobile_app/widgets/topBar.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -32,78 +33,45 @@ class _SignUpFormState extends State<SignUpForm> {
     return Column(
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ...topBar(
+        topBar(
           currentStep: 1,
           setStep: widget.setStep,
           controller: widget.controller,
         ),
         Spacer(), // Put image or something
-        FadeInUp(
-          delay: Duration(milliseconds: 300),
-          duration: Duration(milliseconds: 800),
-          child: TextField(
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.person),
-              labelText: "Email",
-              labelStyle: TextStyle(color: Colors.black),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-              ),
-            ),
-          ),
+        MyTextField(labelText: "Full name", icon: Icon(Icons.person)),
+        SizedBox(height: 35),
+        MyTextField(labelText: "Email", icon: Icon(Icons.email)),
+        SizedBox(height: 35),
+        MyTextField(labelText: "Password", icon: Icon(Icons.key)),
+        SizedBox(height: 35),
+        MyTextField(
+          labelText: "Repeat Password",
+          icon: Icon(Icons.password_rounded),
         ),
         SizedBox(height: 35),
-        FadeInUp(
-          delay: Duration(milliseconds: 300),
-          duration: Duration(milliseconds: 800),
-          child: TextField(
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.key),
-              labelText: "Password",
-              labelStyle: TextStyle(color: Colors.black),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-              ),
+        Padding(
+          padding: EdgeInsets.only(left: 5),
+          child: FadeInUp(
+            delay: Duration(milliseconds: 300),
+            duration: Duration(milliseconds: 800),
+            child: Row(
+              spacing: 10,
+              children: [
+                Checkbox(
+                  value: agreedToTerms,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      agreedToTerms = value ?? false;
+                    });
+                  },
+                ),
+                Text("I agree to the Terms and Conditions"),
+              ],
             ),
           ),
         ),
-        SizedBox(height: 35),
-        FadeInUp(
-          delay: Duration(milliseconds: 300),
-          duration: Duration(milliseconds: 800),
-          child: TextField(
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.key),
-              labelText: "Repeat Password",
-              labelStyle: TextStyle(color: Colors.black),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 30),
-        FadeInUp(
-          delay: Duration(milliseconds: 300),
-          duration: Duration(milliseconds: 800),
-          child: Row(
-            children: [
-              Checkbox(
-                value: agreedToTerms,
-                onChanged: (bool? value) {
-                  setState(() {
-                    agreedToTerms = value ?? false;
-                  });
-                },
-              ),
-              Text("I agree to the terms and conditions"),
-            ],
-          ),
-        ),
-        SizedBox(height: 50),
+        SizedBox(height: 40),
         Row(
           spacing: 30,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -122,9 +90,9 @@ class _SignUpFormState extends State<SignUpForm> {
             Text("Already have an acount?"),
             TextButton(
               onPressed:
-                  () => Navigator.push(
+                  () => Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Login()),
+                    MaterialPageRoute(builder: (_) => Login()),
                   ),
               child: Text(
                 "Login",
@@ -133,7 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ],
         ),
-        SizedBox(height: 70),
+        SizedBox(height: 50),
       ],
     );
   }
