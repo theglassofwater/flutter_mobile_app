@@ -6,6 +6,7 @@ import 'package:flutter_mobile_app/widgets/bottom_navbar.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final isDark = await ThemeStorage().isDark();
 
   runApp(
