@@ -3,6 +3,7 @@ import 'package:flutter_mobile_app/screens/sign_up.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
 import 'package:flutter_mobile_app/big_widgets/login_form.dart';
+import 'package:flutter_mobile_app/utils/screen_transitions.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -32,10 +33,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void switchToSignUp() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => SignUp()),
-    );
+    slideFrom(context, SignUp(), replace: true);
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (_) => SignUp()),
+    // );
   }
 
   @override

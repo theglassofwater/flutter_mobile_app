@@ -9,16 +9,20 @@ class LocationStorage {
   static const _workLatKey = "work_lat";
   static const _workLonKey = "work_lon";
 
-  Future<void> saveHome(int id, double lat, double lon) async {
-    final prefs = await SharedPreferences.getInstance();
+  final SharedPreferences prefs;
+
+  LocationStorage(this.prefs);
+
+  Future<void> setHome(int id, double lat, double lon) async {
+    // final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt(_homeIdKey, id);
     await prefs.setDouble(_homeLatKey, lat);
     await prefs.setDouble(_homeLonKey, lon);
   }
 
-  Future<void> saveWork(int id, double lat, double lon) async {
-    final prefs = await SharedPreferences.getInstance();
+  Future<void> setWork(int id, double lat, double lon) async {
+    // final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt(_workIdKey, id);
     await prefs.setDouble(_workLatKey, lat);
@@ -26,7 +30,7 @@ class LocationStorage {
   }
 
   Future<Map<String, dynamic>?> getHome() async {
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
 
     final id = prefs.getInt(_homeIdKey);
     final lat = prefs.getDouble(_homeLatKey);
@@ -39,7 +43,7 @@ class LocationStorage {
   }
 
   Future<Map<String, dynamic>?> getWork() async {
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
 
     final id = prefs.getInt(_workIdKey);
     final lat = prefs.getDouble(_workLatKey);
@@ -51,7 +55,22 @@ class LocationStorage {
     return null;
   }
 
+  Future<void> resetHome() async {
+    // final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_homeIdKey);
+    await prefs.remove(_homeLatKey);
+    await prefs.remove(_homeLonKey);
+  }
+
+  Future<void> resetWork() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_workIdKey);
+    await prefs.remove(_workLatKey);
+    await prefs.remove(_workLonKey);
+  }
+
   Future<void> resetAll() async {
+    // or call resetHome + resetWork, but then sharedPreferences.instances is called twice...
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_workIdKey);
     await prefs.remove(_workLatKey);

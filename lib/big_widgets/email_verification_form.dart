@@ -29,7 +29,7 @@ class EmailVerificationForm extends StatelessWidget {
             labelText: "Email Verification Code",
             icon: Icon(Icons.pin),
           ),
-          SizedBox(height: 150),
+          SizedBox(height: 190),
           Row(
             spacing: 30,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,25 +48,7 @@ class EmailVerificationForm extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Already have an acount?"),
-              TextButton(
-                onPressed:
-                    () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (_) => Login()),
-                    ),
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: MyColors.darkPurple),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 70),
+          SizedBox(height: 180),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/login.dart';
 import 'package:flutter_mobile_app/screens/sign_up.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
+import 'package:flutter_mobile_app/utils/screen_transitions.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -80,9 +81,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
                       onPressed:
                           () => {
-                            Navigator.pushReplacement(
+                            slideFrom(
                               context,
-                              MaterialPageRoute(builder: (_) => Login()),
+                              Login(),
+                              fromLeft: true,
+                              replace: true,
                             ),
                           },
                       child: Text(
@@ -102,10 +105,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                       onPressed:
                           () => {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (_) => SignUp()),
-                            ),
+                            slideFrom(context, SignUp(), replace: true),
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(builder: (_) => SignUp()),
+                            // ),
                           },
                       child: Text(
                         "Sign Up",

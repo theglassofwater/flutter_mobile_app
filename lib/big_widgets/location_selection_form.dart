@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
+import 'package:flutter_mobile_app/services/location_storage.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
+import 'package:flutter_mobile_app/utils/location_provider.dart';
 import 'package:flutter_mobile_app/widgets/button.dart';
 import 'package:flutter_mobile_app/widgets/map.dart';
 import 'package:flutter_mobile_app/widgets/topBar.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocationSelection extends StatefulWidget {
   final PageController controller;
@@ -63,6 +67,24 @@ class _LocationSelectionState extends State<LocationSelection> {
     setState(() {
       homeStation = home;
     });
+  }
+
+  void onSubmit() {
+    if (homeStation != null) {
+      Provider.of<LocationProvider>(
+        context,
+        listen: false,
+      ).setHome(homeStation!);
+    }
+    if (workStation != null) {
+      Provider.of<LocationProvider>(
+        context,
+        listen: false,
+      ).setWork(workStation!);
+      print("hello");
+    }
+
+    widget.onSignUp();
   }
 
   @override
@@ -229,10 +251,7 @@ class _LocationSelectionState extends State<LocationSelection> {
                       ],
                     ),
                     SizedBox(height: 22),
-                    MyButton(
-                      onTap: () => {widget.onSignUp()},
-                      text: "Finish Sign up",
-                    ),
+                    MyButton(onTap: () => {onSubmit()}, text: "Finish Sign up"),
                   ],
                 ),
               );

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/models/Address.dart';
 import 'package:flutter_mobile_app/models/Location.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
+import 'package:flutter_mobile_app/services/location_storage.dart';
 import 'package:flutter_mobile_app/services/nominatim_api.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
+import 'package:flutter_mobile_app/utils/location_provider.dart';
 import 'package:flutter_mobile_app/utils/theme_provider.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -30,24 +33,36 @@ class _SettingsPageState extends State<SettingsPage> {
   final OverpassApi _overpassApi = OverpassApi();
   final NominatimApi _nominatimApi = NominatimApi();
   bool _isdark = false;
-  final Location _home = Location();
-  final Location _work = Location();
 
-  Future<void> loadLocation(
-    Location location,
-    LatLng addressPosition,
-    int stationId,
-  ) async {
+  POI? _home;
+  POI? _work;
+  // final Location _home = Location();
+  // final Location _work = Location();
+
+  // Future<void> loadLocation(
+  //   Location location,
+  //   LatLng addressPosition,
+  //   int stationId,
+  // ) async {
+  //   try {
+  //     POI station = await _overpassApi.getPOIbyID(id: stationId);
+  //     Address address = await _nominatimApi.getAddressByPosition(
+  //       position: addressPosition,
+  //     );
+
+  //     setState(() {
+  //       location.station = station;
+  //       location.address = address;
+  //     });
+  //   } catch (e) {
+  //     throw Exception("");
+  //   }
+  // }
+
+  Future<POI> loadStation(int stationId) async {
     try {
       POI station = await _overpassApi.getPOIbyID(id: stationId);
-      Address address = await _nominatimApi.getAddressByPosition(
-        position: addressPosition,
-      );
-
-      setState(() {
-        location.station = station;
-        location.address = address;
-      });
+      return station;
     } catch (e) {
       throw Exception("");
     }
@@ -62,16 +77,20 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-    loadLocation(
-      _home,
-      LatLng(51.24372380970368, -0.600301771646355),
-      5863634798,
-    );
-    loadLocation(
-      _work,
-      LatLng(51.521555305395786, -0.1648146847784949),
-      5206785234,
-    ); // 402767337 3638795617
+    _home = Provider.of<LocationProvider>(context, listen: false).getHome();
+    _work = Provider.of<LocationProvider>(context, listen: false).getWork();
+    // final _home = loadStation(stationId);
+    // final _work = loadStation(stationId);
+    // loadLocation(
+    //   _home,
+    //   LatLng(51.24372380970368, -0.600301771646355),
+    //   5863634798,
+    // );
+    // loadLocation(
+    //   _work,
+    //   LatLng(51.521555305395786, -0.1648146847784949),
+    //   5206785234,
+    // ); // 402767337 3638795617
     // loadStation(402767337, "work", _overpassApi);
   }
 
@@ -103,26 +122,32 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             Container(
               height: 22,
-              padding: EdgeInsets.only(top: 1, left: 2),
+              padding: EdgeInsets.only(top: 1, left: 4),
               child: Text("Locations"),
             ),
             _locationsRow(
               context,
               "Home",
-              "${_home.address?.shortName == null ? "Loading" : "${_home.address?.shortName}"} | ${_home.station?.name == null ? "Loading" : "${_home.station?.name} Station"}",
+              // "${_home.address?.shortName == null ? "Loading" : "${_home.address?.shortName}"} | ${_home.station?.name == null ? "Loading" : "${_home.station?.name} Station"}",
+              "${_home == null ? "null" : "${_home!.name} Station"}",
               Icons.home,
-              () => (print(_home)),
+              () {
+                print(
+                  "provider ${Provider.of<LocationProvider>(context, listen: false).getHome()}",
+                );
+              },
             ),
             _locationsRow(
               context,
               "Work",
-              "${_work.address?.shortName == null ? "Loading" : "${_work.address?.shortName}"} | ${_work.station?.name == null ? "Loading" : "${_work.station?.name} Station"}",
+              // "${_work.address?.shortName == null ? "Loading" : "${_work.address?.shortName}"} | ${_work.station?.name == null ? "Loading" : "${_work.station?.name} Station"}",
+              "${_work == null ? "null" : "${_work!.name} Station"}",
               Icons.work,
               () => (print(_work)),
             ),
             Container(
               height: 22,
-              margin: EdgeInsets.only(top: 1, left: 2),
+              margin: EdgeInsets.only(top: 1, left: 4),
               child: Text("Preferences (dummy)"),
             ),
             ...List.generate(6, (index) {
@@ -130,7 +155,7 @@ class _SettingsPageState extends State<SettingsPage> {
             }),
             Container(
               height: 22,
-              margin: EdgeInsets.only(top: 1, left: 2),
+              margin: EdgeInsets.only(top: 1, left: 4),
               child: Text("Account (dummy)"),
             ),
             ...List.generate(3, (index) {

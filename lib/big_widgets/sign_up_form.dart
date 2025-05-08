@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/login.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
+import 'package:flutter_mobile_app/utils/screen_transitions.dart';
 import 'package:flutter_mobile_app/widgets/button.dart';
 import 'package:flutter_mobile_app/widgets/text_field.dart';
 import 'package:flutter_mobile_app/widgets/topBar.dart';
@@ -78,7 +79,15 @@ class _SignUpFormState extends State<SignUpForm> {
           children: [
             MyButton(onTap: () => widget.onSignUp(), text: " Register "),
             MyButton(
-              onTap: () => {widget.controller.jumpToPage(1), widget.setStep(1)},
+              onTap:
+                  () => {
+                    widget.controller..animateToPage(
+                      1, // target page index
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut, // this is your animation style
+                    ),
+                    widget.setStep(1),
+                  },
               text: "Next Step",
             ),
           ],
@@ -89,11 +98,7 @@ class _SignUpFormState extends State<SignUpForm> {
           children: [
             Text("Already have an acount?"),
             TextButton(
-              onPressed:
-                  () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => Login()),
-                  ),
+              onPressed: () => widget.switchToLogin(),
               child: Text(
                 "Login",
                 style: TextStyle(color: MyColors.darkPurple),

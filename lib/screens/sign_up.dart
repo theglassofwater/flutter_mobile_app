@@ -10,6 +10,7 @@ import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/big_widgets/bottom_navbar.dart';
 import 'package:flutter_mobile_app/big_widgets/location_selection_form.dart';
 import 'package:flutter_mobile_app/big_widgets/sign_up_form.dart';
+import 'package:flutter_mobile_app/utils/screen_transitions.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
 
@@ -46,10 +47,11 @@ class _SignUpPageState extends State<SignUpPage> {
 
   // Switching to Login
   void switchToLogin() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => Login()),
-    );
+    slideFrom(context, Login(), replace: true, fromLeft: true);
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (_) => Login()),
+    // );
   }
 
   // Proccessing Sign Up
@@ -74,6 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
       backgroundColor: MyColors.lightPink,
       body: PageView(
         controller: controller,
+        scrollDirection: Axis.horizontal,
         children: [
           SignUpForm(
             controller: controller,

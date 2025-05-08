@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/screens/settings.dart';
+import 'package:flutter_mobile_app/utils/screen_transitions.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -40,10 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Settings()),
-            );
+            slideFrom(context, Settings(), fromLeft: true);
           },
         ),
         // bottom: PreferredSize(
