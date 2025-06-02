@@ -25,7 +25,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // Processing Login
-  void onLogin() {
+  void onLogin(String email, String password) {
+    print(email);
+    print(password);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => BottomNavBar()),
@@ -34,10 +36,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void switchToSignUp() {
     slideFrom(context, SignUp(), replace: true);
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (_) => SignUp()),
-    // );
   }
 
   @override

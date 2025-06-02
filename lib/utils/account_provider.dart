@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_app/models/POI.dart';
-import 'package:flutter_mobile_app/services/overpass_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountProvider extends ChangeNotifier {
