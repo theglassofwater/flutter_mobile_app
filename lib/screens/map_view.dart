@@ -4,6 +4,7 @@ import 'package:flutter_mobile_app/models/POI.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_mobile_app/widgets/map.dart';
+import 'package:provider/provider.dart';
 
 class MapView extends StatelessWidget {
   const MapView({super.key});
@@ -24,20 +25,20 @@ class MapViewPage extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapViewPage> {
-  final OverpassApi _overpassApi = OverpassApi();
-  final MapController _mapController = MapController();
-  List<POI> _pois = [];
+  late OverpassApi overpassApi;
+  final MapController mapController = MapController();
+  List<POI> pois = [];
   LatLng currentPos = LatLng(51.24, -0.57);
   // call api for POI's
 
   Future<void> loadPOIs(LatLng position, {double area = 0.02}) async {
     try {
-      List<POI> response = await _overpassApi.getPOIsByArea(
+      List<POI> response = await overpassApi.getPOIsByArea(
         position: position,
         area: area,
       );
       setState(() {
-        _pois = response;
+        pois = response;
       });
     } catch (e) {
       throw Exception("hello");
@@ -45,21 +46,18 @@ class _MapViewState extends State<MapViewPage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    overpassApi = Provider.of<OverpassApi>(context, listen: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   toolbarHeight: 50,
-      //   // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   title: Center(child: Text(widget.title)),
-      //   elevation: 10,
-      //   shadowColor: const Color.fromARGB(255, 255, 255, 255),
-      // ),
-      body:
-      // SafeArea(
-      //   child:
-      Stack(
+      body: Stack(
         children: [
-          MyMap(controller: _mapController, coord: currentPos, pois: _pois),
+          MyMap(controller: mapController, coord: currentPos, pois: pois),
           Positioned(
             top: 20,
             left: 20,
@@ -116,7 +114,7 @@ class _MapViewState extends State<MapViewPage> {
 
       // ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => loadPOIs(_mapController.camera.center, area: 0.1),
+        onPressed: () => loadPOIs(mapController.camera.center, area: 0.1),
         child: const Icon(Icons.wifi_tethering),
       ),
     );
