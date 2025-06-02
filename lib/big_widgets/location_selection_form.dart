@@ -1,50 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
-import 'package:flutter_mobile_app/services/location_storage.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
-import 'package:flutter_mobile_app/utils/location_provider.dart';
 import 'package:flutter_mobile_app/widgets/button.dart';
 import 'package:flutter_mobile_app/widgets/map.dart';
 import 'package:flutter_mobile_app/widgets/topBar.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LocationSelection extends StatefulWidget {
+class LocationSelectionForm extends StatefulWidget {
   final PageController controller;
   final MapController mapController;
   final void Function(int step) setStep;
-  final Function onSignUp;
+  final Function onLocationSelection;
 
-  const LocationSelection({
+  const LocationSelectionForm({
     super.key,
     required this.mapController,
     required this.controller,
     required this.setStep,
-    required this.onSignUp,
+    required this.onLocationSelection,
   });
 
   @override
-  State<LocationSelection> createState() => _LocationSelectionState();
+  State<LocationSelectionForm> createState() => _LocationSelectionFormState();
 }
 
-class _LocationSelectionState extends State<LocationSelection> {
-  bool notTrainUser = false;
+class _LocationSelectionFormState extends State<LocationSelectionForm> {
+  bool isTrainUser = false;
 
   List<POI> pois = [];
-  POI? homeStation;
-  POI? workStation;
+  POI? home;
+  POI? work;
 
   LatLng currentPos = LatLng(51.24, -0.57);
 
   // API'S
-  final OverpassApi _overpassApi = OverpassApi();
-  final MapController _mapController = MapController();
+  late OverpassApi overpassApi;
+  final MapController mapController = MapController();
 
   Future<void> loadPOIs(LatLng position, {double area = 0.02}) async {
     try {
-      List<POI> response = await _overpassApi.getPOIsByArea(
+      List<POI> response = await overpassApi.getPOIsByArea(
         position: position,
         area: area,
       );
@@ -57,40 +54,23 @@ class _LocationSelectionState extends State<LocationSelection> {
   }
 
   // Proccessing Location Selection
-  void setWork(work) {
+  void setWork(_work) {
     setState(() {
-      workStation = work;
+      work = _work;
     });
   }
 
-  void setHome(home) {
+  void setHome(_home) {
     setState(() {
-      homeStation = home;
+      home = _home;
     });
-  }
-
-  void onSubmit() {
-    if (homeStation != null) {
-      Provider.of<LocationProvider>(
-        context,
-        listen: false,
-      ).setHome(homeStation!);
-    }
-    if (workStation != null) {
-      Provider.of<LocationProvider>(
-        context,
-        listen: false,
-      ).setWork(workStation!);
-      print("hello");
-    }
-
-    widget.onSignUp();
   }
 
   @override
   void initState() {
     super.initState();
-    loadPOIs(LatLng(51.24, -0.57));
+    overpassApi = Provider.of<OverpassApi>(context, listen: false);
+    loadPOIs(currentPos);
   }
 
   @override
@@ -100,7 +80,7 @@ class _LocationSelectionState extends State<LocationSelection> {
       // width: double.infinity,
       child: Stack(
         children: [
-          MyMap(controller: _mapController, coord: currentPos, pois: pois),
+          MyMap(controller: mapController, coord: currentPos, pois: pois),
           topBar(
             currentStep: 3,
             setStep: widget.setStep,
@@ -197,7 +177,7 @@ class _LocationSelectionState extends State<LocationSelection> {
                       },
                     ),
                     DropdownButton<POI>(
-                      value: homeStation,
+                      value: home,
                       isExpanded: true,
                       hint: Text("Choose a station"),
                       items:
@@ -209,19 +189,16 @@ class _LocationSelectionState extends State<LocationSelection> {
                           }).toList(),
                       onChanged: (POI? newValue) {
                         setHome(newValue!);
-                        print("Selected home station: ${newValue?.name}");
                       },
                     ),
                     SizedBox(height: 20),
                     ListTile(
                       leading: Icon(Icons.work),
                       title: Text("Set Work Station"),
-                      onTap: () {
-                        // Do something with map tap or selection
-                      },
+                      onTap: () {},
                     ),
                     DropdownButton<POI>(
-                      value: workStation,
+                      value: work,
                       isExpanded: true,
                       hint: Text("Choose a station"),
                       items:
@@ -233,17 +210,16 @@ class _LocationSelectionState extends State<LocationSelection> {
                           }).toList(),
                       onChanged: (POI? newValue) {
                         setWork(newValue!);
-                        print("Selected work station: ${newValue?.name}");
                       },
                     ),
                     SizedBox(height: 22),
                     Row(
                       children: [
                         Checkbox(
-                          value: notTrainUser,
+                          value: isTrainUser,
                           onChanged: (bool? value) {
                             setState(() {
-                              notTrainUser = value ?? false;
+                              isTrainUser = value ?? false;
                             });
                           },
                         ),
@@ -251,7 +227,12 @@ class _LocationSelectionState extends State<LocationSelection> {
                       ],
                     ),
                     SizedBox(height: 22),
-                    MyButton(onTap: () => {onSubmit()}, text: "Finish Sign up"),
+                    MyButton(
+                      onTap: () {
+                        widget.onLocationSelection(home, work, isTrainUser);
+                      },
+                      text: "Finish Sign up",
+                    ),
                   ],
                 ),
               );

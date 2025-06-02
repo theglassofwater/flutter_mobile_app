@@ -1,11 +1,11 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_app/styles/colors.dart';
 import 'package:flutter_mobile_app/widgets/text_field.dart';
 
-class LoginForm extends StatelessWidget {
-  final Function onLogin;
-  final Function switchToSignUp;
+class LoginForm extends StatefulWidget {
+  final void Function(String email, String password) onLogin;
+  final VoidCallback switchToSignUp;
+
   const LoginForm({
     super.key,
     required this.onLogin,
@@ -13,18 +13,47 @@ class LoginForm extends StatelessWidget {
   });
 
   @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  String email = "";
+  String password = "";
+
+  void setEmail(String _email) {
+    setState(() {
+      email = _email;
+    });
+  }
+
+  void setPassword(String _password) {
+    setState(() {
+      password = _password;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Spacer(), // Put image or something
-          MyTextField(labelText: "Email", icon: Icon(Icons.person)),
+          Spacer(),
+          MyTextField(
+            labelText: "Email",
+            icon: Icon(Icons.person),
+            isEmail: true,
+            onChange: setEmail,
+          ),
           SizedBox(height: 35),
-          MyTextField(labelText: "Password", icon: Icon(Icons.key)),
+          MyTextField(
+            labelText: "Password",
+            icon: Icon(Icons.key),
+            isPassword: true,
+            onChange: setPassword,
+          ),
           SizedBox(height: 80),
           Row(
-            spacing: 30,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MaterialButton(
@@ -33,7 +62,7 @@ class LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                onPressed: () => onLogin(),
+                onPressed: () => widget.onLogin(email, password),
                 child: Text(
                   " Login ",
                   style: Theme.of(context).textTheme.titleSmall,
@@ -45,9 +74,9 @@ class LoginForm extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Don't have an acount?"),
+              Text("Don't have an account?"),
               TextButton(
-                onPressed: () => switchToSignUp(),
+                onPressed: widget.switchToSignUp,
                 child: Text(
                   "Sign Up",
                   style: TextStyle(color: MyColors.darkPurple),
