@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_app/models/Address.dart';
-import 'package:flutter_mobile_app/models/Location.dart';
 import 'package:flutter_mobile_app/models/POI.dart';
-import 'package:flutter_mobile_app/services/location_storage.dart';
-import 'package:flutter_mobile_app/services/nominatim_api.dart';
 import 'package:flutter_mobile_app/services/overpass_api.dart';
+import 'package:flutter_mobile_app/utils/account_provider.dart';
 import 'package:flutter_mobile_app/utils/location_provider.dart';
 import 'package:flutter_mobile_app/utils/theme_provider.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -30,38 +25,19 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final OverpassApi _overpassApi = OverpassApi();
-  final NominatimApi _nominatimApi = NominatimApi();
-  bool _isdark = false;
+  late OverpassApi overpassApi;
+  bool isDark = false;
 
-  POI? _home;
-  POI? _work;
-  // final Location _home = Location();
-  // final Location _work = Location();
+  POI? home;
+  POI? work;
 
-  // Future<void> loadLocation(
-  //   Location location,
-  //   LatLng addressPosition,
-  //   int stationId,
-  // ) async {
-  //   try {
-  //     POI station = await _overpassApi.getPOIbyID(id: stationId);
-  //     Address address = await _nominatimApi.getAddressByPosition(
-  //       position: addressPosition,
-  //     );
-
-  //     setState(() {
-  //       location.station = station;
-  //       location.address = address;
-  //     });
-  //   } catch (e) {
-  //     throw Exception("");
-  //   }
-  // }
+  String? name;
+  String? email;
+  String? password;
 
   Future<POI> loadStation(int stationId) async {
     try {
-      POI station = await _overpassApi.getPOIbyID(id: stationId);
+      POI station = await overpassApi.getPOIbyID(id: stationId);
       return station;
     } catch (e) {
       throw Exception("");
@@ -69,29 +45,27 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void darkModeSwitch(bool isdark) {
+    Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
     setState(() {
-      _isdark = !isdark;
+      isDark = !isdark;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _home = Provider.of<LocationProvider>(context, listen: false).getHome();
-    _work = Provider.of<LocationProvider>(context, listen: false).getWork();
-    // final _home = loadStation(stationId);
-    // final _work = loadStation(stationId);
-    // loadLocation(
-    //   _home,
-    //   LatLng(51.24372380970368, -0.600301771646355),
-    //   5863634798,
-    // );
-    // loadLocation(
-    //   _work,
-    //   LatLng(51.521555305395786, -0.1648146847784949),
-    //   5206785234,
-    // ); // 402767337 3638795617
-    // loadStation(402767337, "work", _overpassApi);
+    overpassApi = Provider.of<OverpassApi>(context, listen: false);
+
+    home = Provider.of<LocationProvider>(context, listen: false).getHome();
+    work = Provider.of<LocationProvider>(context, listen: false).getWork();
+
+    name = Provider.of<AccountProvider>(context, listen: false).getName();
+    email = Provider.of<AccountProvider>(context, listen: false).getEmail();
+    password =
+        Provider.of<AccountProvider>(context, listen: false).getPassword();
+    print(name);
+    print(email);
+    print(password);
   }
 
   @override
@@ -105,13 +79,12 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           Switch(
             value:
-                _isdark ==
+                isDark ==
                 (Provider.of<ThemeProvider>(context).theme == "dark"
                     ? false
                     : true),
             onChanged: (tap) {
               darkModeSwitch(tap);
-              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
             },
           ),
         ],
@@ -128,8 +101,8 @@ class _SettingsPageState extends State<SettingsPage> {
             _locationsRow(
               context,
               "Home",
-              // "${_home.address?.shortName == null ? "Loading" : "${_home.address?.shortName}"} | ${_home.station?.name == null ? "Loading" : "${_home.station?.name} Station"}",
-              "${_home == null ? "null" : "${_home!.name} Station"}",
+              // "${home.address?.shortName == null ? "Loading" : "${home.address?.shortName}"} | ${home.station?.name == null ? "Loading" : "${home.station?.name} Station"}",
+              "${home == null ? "null" : "${home!.name} Station"}",
               Icons.home,
               () {
                 print(
@@ -140,10 +113,10 @@ class _SettingsPageState extends State<SettingsPage> {
             _locationsRow(
               context,
               "Work",
-              // "${_work.address?.shortName == null ? "Loading" : "${_work.address?.shortName}"} | ${_work.station?.name == null ? "Loading" : "${_work.station?.name} Station"}",
-              "${_work == null ? "null" : "${_work!.name} Station"}",
+              // "${work.address?.shortName == null ? "Loading" : "${work.address?.shortName}"} | ${work.station?.name == null ? "Loading" : "${work.station?.name} Station"}",
+              "${work == null ? "null" : "${work!.name} Station"}",
               Icons.work,
-              () => (print(_work)),
+              () => (print(work)),
             ),
             Container(
               height: 22,
