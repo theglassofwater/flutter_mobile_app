@@ -18,11 +18,9 @@ class LocationProvider extends ChangeNotifier {
   static const _workLatKey = "work_lat";
   static const _workLonKey = "work_lon";
 
-  LocationProvider(this.prefs, this.overpassApi) {
-    loadLocations();
-  }
+  LocationProvider(this.prefs, this.overpassApi) {}
 
-  Future<void> loadLocations() async {
+  Future<void> init() async {
     final homeId = prefs.getInt(_homeIdKey);
     if (homeId != null) {
       home = await overpassApi.getPOIbyID(id: homeId);
@@ -48,17 +46,14 @@ class LocationProvider extends ChangeNotifier {
     await prefs.setInt(_homeIdKey, poi.id);
     await prefs.setDouble(_homeLatKey, poi.position.latitude);
     await prefs.setDouble(_homeLonKey, poi.position.longitude);
-    print("home is set! ${home!.id}");
     notifyListeners();
   }
 
   Future<void> setWork(POI poi) async {
-    var _prefs = await SharedPreferences.getInstance();
     work = poi;
-    await _prefs.setInt(_workIdKey, poi.id);
-    await _prefs.setDouble(_workLatKey, poi.position.latitude);
-    await _prefs.setDouble(_workLonKey, poi.position.longitude);
-    print("work is set! ${work!.id}");
+    await prefs.setInt(_workIdKey, poi.id);
+    await prefs.setDouble(_workLatKey, poi.position.latitude);
+    await prefs.setDouble(_workLonKey, poi.position.longitude);
     notifyListeners();
   }
 

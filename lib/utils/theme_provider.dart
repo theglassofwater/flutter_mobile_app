@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobile_app/services/theme_storage.dart';
 import 'package:flutter_mobile_app/styles/themes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider with ChangeNotifier {
   bool isDark;
-  ThemeProvider(this.isDark);
 
-  // ThemeData _themeData = isDark ? AppTheme.darkTheme : AppTheme.lightTheme;
+  final SharedPreferences prefs;
+  static const _key = "is_dark";
+
+  ThemeProvider(this.prefs) : isDark = prefs.getBool(_key) ?? false;
 
   ThemeData get themeData => isDark ? AppTheme.darkTheme : AppTheme.lightTheme;
   String get theme => isDark ? "dark" : "light";
 
-  set theme(String theme) {
-    isDark = theme == "dark" ? true : false;
-    ThemeStorage().setTheme(isDark ? "dark" : "light");
+  Future<void> setTheme(String theme) async {
+    if (theme == "dark") {
+      await prefs.setBool(_key, true);
+    } else {
+      await prefs.setBool(_key, false);
+    }
 
     notifyListeners();
   }
 
-  void toggleTheme() async {
+  Future<void> toggleTheme() async {
+    await prefs.setBool(_key, !isDark);
     isDark = !isDark;
-    ThemeStorage().toggleTheme();
 
     notifyListeners();
   }
 
-  // void toggleTheme() {
-  //   if (_themeData == AppTheme.darkTheme) {
-  //     _themeData = AppTheme.lightTheme;
-  //   } else {
-  //     _themeData = AppTheme.darkTheme;
-  //   }
-  //   notifyListeners();
-  // }
+  Future<void> reset() async {
+    await prefs.setString(_key, "light");
+  }
 }
