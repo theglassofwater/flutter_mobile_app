@@ -6,6 +6,7 @@ Welcome to DelayMate! This Flutter application is designed to help you navigate 
 
 The `lib/` directory is organized based on MVVM principles:
 
+<pre>
 lib/
 ├── main.dart                  # App entry point, global Provider/DI setup
 
@@ -67,7 +68,7 @@ lib/
 ├── styles/                    # UI styling, themes, and color palettes
 │   ├── colors.dart
 │   └── themes.dart
-
+</pre>
 
 ### Layer Descriptions:
 
